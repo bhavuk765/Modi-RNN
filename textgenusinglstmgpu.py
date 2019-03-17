@@ -62,7 +62,7 @@ callbacks_list = [checkpoint]
 
 #train model
 model.load_weights(filepath)
-model.fit(X, y, epochs=30, batch_size=256, callbacks=callbacks_list,validation_split=0.3)
+model.fit(X, y, epochs=40, batch_size=512, callbacks=callbacks_list,validation_split=0.3)
 
 #reverse mapping
 int_to_char = dict((i, c) for i, c in enumerate(chars))
