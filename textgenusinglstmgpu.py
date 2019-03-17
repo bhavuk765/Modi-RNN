@@ -56,25 +56,26 @@ model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
 #define checkpoints
-filepath = "weights-improvement-100-1.7959.hdf5"
+filepath = "weights-improvement-latest.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
 #train model
-model.fit(X, y, epochs=1, batch_size=128, callbacks=callbacks_list,validation_split=0.2)
+model.load_weights(filepath)
+model.fit(X, y, epochs=30, batch_size=256, callbacks=callbacks_list,validation_split=0.3)
 
 #reverse mapping
 int_to_char = dict((i, c) for i, c in enumerate(chars))
 
 #pick a random seed
-# %%
+
 start = np.random.randint(0, len(dataX) - 1)
 pattern = dataX[start]
 print("Seed: ")
 print("\" ", ''.join([int_to_char[value] for value in pattern]), "\"")
 
 #generate text 
-for i in range(1000):
+for i in range(100):
     x = np.reshape(pattern, (1, len(pattern), 1))
     x = x/float(n_vocab)
 #    print(i,x)
@@ -87,4 +88,4 @@ for i in range(1000):
     pattern.append(index)
     pattern = pattern[1:len(pattern)]
 print("\nDone")
-# %%
+
